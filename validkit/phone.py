@@ -26,6 +26,8 @@ def normalize_phone(text: str, country_code: str) -> str:
         raise ValueError("normalize_phone: phone number contains no digits")
 
     if cleaned.startswith("+"):
+        if not digits.lstrip("0"):
+            raise ValueError("normalize_phone: phone number has no meaningful digits")
         return "+" + digits
     if cleaned.startswith("00"):
         rest = digits[2:]

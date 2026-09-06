@@ -57,6 +57,21 @@ def test_normalize_phone_triple_zero_raises_value_error() -> None:
         normalize_phone("000", "DE")
 
 
+def test_normalize_phone_plus_double_zero_raises_value_error() -> None:
+    with pytest.raises(ValueError):
+        normalize_phone("+00", "DE")
+
+
+def test_normalize_phone_plus_single_zero_raises_value_error() -> None:
+    with pytest.raises(ValueError):
+        normalize_phone("+0", "DE")
+
+
+def test_normalize_phone_plus_triple_zero_raises_value_error() -> None:
+    with pytest.raises(ValueError):
+        normalize_phone("+000", "DE")
+
+
 def test_normalize_phone_many_zeros_raises_value_error() -> None:
     with pytest.raises(ValueError):
         normalize_phone("0000000", "DE")
