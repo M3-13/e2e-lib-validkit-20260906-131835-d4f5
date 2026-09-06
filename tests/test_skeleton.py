@@ -1,6 +1,9 @@
 import inspect
+import io
+from contextlib import redirect_stdout
 
 import validkit
+from validkit.__main__ import main
 
 EXPECTED = {
     "is_valid_email": "(text: str) -> bool",
@@ -30,3 +33,12 @@ def test_signatures_match_contract() -> None:
         obj = getattr(validkit, name)
         actual_sig = str(inspect.signature(obj))
         assert actual_sig == expected_sig, f"{name}: expected {expected_sig}, got {actual_sig}"
+
+
+def test_cli_prints_nine_names() -> None:
+    buf = io.StringIO()
+    with redirect_stdout(buf):
+        main()
+    lines = buf.getvalue().splitlines()
+    assert len(lines) == len(EXPECTED)
+    assert set(lines) == set(EXPECTED)
