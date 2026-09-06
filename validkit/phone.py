@@ -28,7 +28,10 @@ def normalize_phone(text: str, country_code: str) -> str:
     if cleaned.startswith("+"):
         return "+" + digits
     if cleaned.startswith("00"):
-        return "+" + digits[2:]
+        rest = digits[2:]
+        if not rest or not rest.lstrip("0"):
+            raise ValueError("normalize_phone: phone number has no meaningful digits")
+        return "+" + rest
 
     country_digits = prefix[1:]
     if digits.startswith(country_digits):
